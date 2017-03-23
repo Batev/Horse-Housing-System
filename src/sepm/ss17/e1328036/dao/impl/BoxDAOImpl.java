@@ -1,22 +1,28 @@
 package sepm.ss17.e1328036.dao.impl;
 
 import sepm.ss17.e1328036.dao.BoxDAO;
-import sepm.ss17.e1328036.entities.Box;
+import sepm.ss17.e1328036.dto.Box;
 import sepm.ss17.e1328036.util.DatabaseUtil;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by evgen on 18.03.2017.
  */
 public class BoxDAOImpl implements BoxDAO{
 
-    private String saveStatement = "INSERT INTO Boxes (bid, size, sawdust_amount, straw_amaount, has_window, price, is_deleted) VALUES (DEFAULT,?,?,?,?,?, DEFAULT)";
-    private String searchStatement = "SELECT * FROM Boxes b WHERE b.bid = ?";
-    private String deleteStatement = "UPDATE Boxes SET is_deleted = true WHERE bid = ?";
-    private String updatePriceStatement = "UPDATE Boxes SET price = ? WHERE bid = ? AND is_deleted = false";
+    private final String saveStatement = "INSERT INTO Boxes (bid, size, sawdust_amount, straw_amaount, has_window, price, is_deleted) VALUES (DEFAULT,?,?,?,?,?, DEFAULT)";
+    private final String searchStatement = "SELECT * FROM Boxes b WHERE b.bid = ?";
+    private final String deleteStatement = "UPDATE Boxes SET is_deleted = true WHERE bid = ?";
+    private final String updatePriceStatement = "UPDATE Boxes SET price = ? WHERE bid = ? AND is_deleted = false";
+    private final String saveImages = "INSERT INTO Images (iid, bid, image) VALUES (DEFAULT,?,?)";
+    private final String getImages = "SELECT image FROM images i WHERE i.bid = ?";
 
     @Override
     public void save(Box box) {
@@ -54,7 +60,7 @@ public class BoxDAOImpl implements BoxDAO{
                 }
             }
             else {
-                //TODO: Error handling...
+                throw new IllegalArgumentException("No box with bid: " + bid);
             }
 
             preparedStatement.close();
@@ -98,5 +104,48 @@ public class BoxDAOImpl implements BoxDAO{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void addImages(int bid, List<FileInputStream> images) {
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = DatabaseUtil.getConnection().prepareStatement(saveImages);
+
+            for (FileInputStream image:
+                 images) {
+                preparedStatement.setInt(1, bid);
+                preparedStatement.setBinaryStream(2, image);
+                preparedStatement.executeUpdate();
+            }
+
+            preparedStatement.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public List<InputStream> getImages(int bid) {
+        List<InputStream> images = new LinkedList<>();
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = DatabaseUtil.getConnection().prepareStatement(getImages);
+            preparedStatement.setInt(1,bid);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                images.add(resultSet.getBinaryStream(1));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return images.size() == 0 ? null : images;
     }
 }

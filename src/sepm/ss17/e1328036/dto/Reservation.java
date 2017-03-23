@@ -1,4 +1,4 @@
-package sepm.ss17.e1328036.entities;
+package sepm.ss17.e1328036.dto;
 
 import java.sql.Date;
 
@@ -58,5 +58,10 @@ public class Reservation {
 
     public void setDateTo(Date dateTo) {
         this.dateTo = dateTo;
+    }
+
+    @Override
+    public String toString() {
+        return "Client: " + clientName + ", Horse: " + horseName + ", From: " + dateFrom.toString() + " to " + dateTo.toString() + ".";
     }
 }

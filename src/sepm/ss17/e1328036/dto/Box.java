@@ -1,4 +1,4 @@
-package sepm.ss17.e1328036.entities;
+package sepm.ss17.e1328036.dto;
 
 /**
  * Created by evgen on 18.03.2017.
