@@ -12,11 +12,11 @@ public interface ReservationDAO {
 
     void create(Reservation reservation);
 
-    void delete(Reservation reservation);
+    void delete(Reservation reservation) throws DAOException;
 
     List<Reservation> getAll();
 
     List<Reservation> getByDate(Date startDate, Date endDate);
 
-    void updateEndDate(Reservation reservation, Date endDate);
+    void updateEndDate(int bid, Date dateFrom, Date dateTo, Date newEndDate);
 }

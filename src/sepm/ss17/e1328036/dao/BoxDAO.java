@@ -11,10 +11,10 @@ import java.util.List;
  */
 public interface BoxDAO {
 
-    void save(Box box);
-    Box search(int bid);
-    void delete(int bid);
-    void updatePrice(int bid, float newPrice);
-    void addImages(int bid, List<FileInputStream> images);
-    List<InputStream> getImages(int bid);
+    void save(Box box) throws DAOException;
+    Box search(int bid) throws DAOException;
+    void delete(int bid) throws DAOException;
+    void updatePrice(int bid, float newPrice) throws DAOException;
+    List<Box> getAll() throws DAOException;
+    List<Box> getByDate(float priceFrom, Float priceTo) throws DAOException;
 }

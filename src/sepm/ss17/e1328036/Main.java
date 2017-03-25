@@ -5,10 +5,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import sepm.ss17.e1328036.dao.BoxDAO;
+import sepm.ss17.e1328036.dao.ReservationDAO;
+
+import sepm.ss17.e1328036.dao.impl.ReservationDAOImpl;
+import sepm.ss17.e1328036.dto.Reservation;
 import sepm.ss17.e1328036.util.DatabaseUtil;
 
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.List;
 
 public class Main extends Application {
 
@@ -16,11 +22,13 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("ui/sample.fxml"));
         primaryStage.setTitle("Hello World");
-        Scene scene = new Scene(root, 300, 275);
+        Scene scene = new Scene(root, 600, 360);
         primaryStage.setScene(scene);
         primaryStage.show();
 
         DatabaseUtil.openConnection();
+
+
 
         DatabaseUtil.closeConnection();
 
