@@ -9,15 +9,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sepm.ss17.e1328036.dto.Box;
 import sepm.ss17.e1328036.service.Service;
 import sepm.ss17.e1328036.service.ServiceException;
 import sepm.ss17.e1328036.service.SimpleService;
-import sepm.ss17.e1328036.util.DatabaseUtil;
 
 import java.io.IOException;
 import java.net.URL;
@@ -79,11 +76,7 @@ public class BoxViewController implements Initializable {
         price.setCellValueFactory(new PropertyValueFactory<Box, Float>("price"));
         picture.setCellValueFactory(new PropertyValueFactory<Box, String>("image"));
 
-        try {
-            boxTable.getItems().setAll(service.getAllBoxes());
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
+        showAll();
 
     }
 
@@ -123,6 +116,7 @@ public class BoxViewController implements Initializable {
         }
     }
 
+    @FXML
     public void onUpdateClicked() {
         setCurrentBox();
 
@@ -143,10 +137,66 @@ public class BoxViewController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Update");
             stage.setScene(scene);
-            stage.show();
+            stage.showAndWait();
+
+            showAll();
         }
         else {
             Main.showAlert("Error", "No row selected.", "You must select a row in order to edit it.", Alert.AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    public void onAddClicked() {
+
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("AddBoxView.fxml"));
+        Scene scene = null;
+
+        try {
+            scene = new Scene(fxmlLoader.load(), 400, 450);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage stage = new Stage();
+        stage.setResizable(false);
+        stage.alwaysOnTopProperty();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Add");
+        stage.setScene(scene);
+        stage.showAndWait();
+
+        showAll();
+    }
+
+    @FXML
+    public void onDeleteClicked() {
+        setCurrentBox();
+
+        if (currentBox != null) {
+
+            try {
+                service.deleteBox(currentBox.getBid());
+            } catch (ServiceException e) {
+                Main.showAlert("Error", "Problem while deleting box with id: " + currentBox.getBid(), e.getMessage(), Alert.AlertType.ERROR);
+            }
+            showAll();
+        }
+        else {
+            Main.showAlert("Error", "No row selected.", "You must select a row in order to delete it.", Alert.AlertType.ERROR);
+        }
+    }
+
+    public void onShowAllClicked() {
+        showAll();
+    }
+
+    private void showAll() {
+        try {
+            boxTable.getItems().setAll(service.getAllBoxes());
+        } catch (ServiceException e) {
+            e.printStackTrace();
         }
     }
 

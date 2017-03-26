@@ -74,7 +74,7 @@ public class UpdateBoxViewController implements Initializable {
                 executeFloatUpdate(false);
                 break;
         }
-        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        Stage stage = (Stage) okButton.getScene().getWindow();
         stage.close();
     }
 

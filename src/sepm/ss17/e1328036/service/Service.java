@@ -15,4 +15,6 @@ public interface Service {
     List<Box> getBoxesById(int bid) throws ServiceException;
     void updateBoxSize(int bid, float newSize) throws ServiceException;
     void updateBoxPrice(int bid, float newPrice) throws ServiceException;
+    void deleteBox(int bid) throws ServiceException;
+    void addBox(Box box) throws ServiceException;
 }

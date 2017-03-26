@@ -1,5 +1,6 @@
 package sepm.ss17.e1328036.service;
 
+import javafx.fxml.FXML;
 import sepm.ss17.e1328036.dao.BoxDAO;
 import sepm.ss17.e1328036.dao.DAOException;
 import sepm.ss17.e1328036.dao.ReservationDAO;
@@ -101,4 +102,26 @@ public class SimpleService implements Service {
         }
     }
 
+    @Override
+    public void deleteBox(int bid) throws ServiceException {
+
+        try {
+            boxDAO.delete(bid);
+        } catch (DAOException e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void addBox(Box box) throws ServiceException {
+        if (box.getSize() < 0 || box.getSawdust() < 0 || box.getStraw() < 0 || box.getPrice() < 0) {
+            throw new ServiceException("All values must be positive.");
+        }
+
+        try {
+            boxDAO.save(box);
+        } catch (DAOException e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
 }
