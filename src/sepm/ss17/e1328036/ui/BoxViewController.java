@@ -1,5 +1,6 @@
 package sepm.ss17.e1328036.ui;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -9,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sepm.ss17.e1328036.dto.Box;
@@ -19,6 +22,7 @@ import sepm.ss17.e1328036.service.SimpleService;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -44,8 +48,7 @@ public class BoxViewController implements Initializable {
     @FXML
     private TableColumn<Box, Float> price;
     @FXML
-    private TableColumn<Box, String> picture;
-
+    private TableColumn<Box, ImageView> picture;
     @FXML
     private RadioButton idButton;
     @FXML
@@ -74,7 +77,8 @@ public class BoxViewController implements Initializable {
         straw.setCellValueFactory(new PropertyValueFactory<Box, Integer>("straw"));
         windows.setCellValueFactory(new PropertyValueFactory<Box, Boolean>("hasWindow"));
         price.setCellValueFactory(new PropertyValueFactory<Box, Float>("price"));
-        picture.setCellValueFactory(new PropertyValueFactory<Box, String>("image"));
+        picture.setCellValueFactory(e -> new SimpleObjectProperty<>(new ImageView(new Image(e.getValue().getImage(), 70, 70, false ,true))));
+        picture.setPrefWidth(75);
 
         showAll();
 
@@ -163,7 +167,7 @@ public class BoxViewController implements Initializable {
         stage.setResizable(false);
         stage.alwaysOnTopProperty();
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Add");
+        stage.setTitle("Add box...");
         stage.setScene(scene);
         stage.showAndWait();
 
@@ -174,17 +178,25 @@ public class BoxViewController implements Initializable {
     public void onDeleteClicked() {
         setCurrentBox();
 
-        if (currentBox != null) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete...");
+        alert.setHeaderText("Delete selected box.");
+        alert.setContentText("Are you sure, that you want to delete a box with id: " + currentBox.getBid() + "?");
 
-            try {
-                service.deleteBox(currentBox.getBid());
-            } catch (ServiceException e) {
-                Main.showAlert("Error", "Problem while deleting box with id: " + currentBox.getBid(), e.getMessage(), Alert.AlertType.ERROR);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+
+            if (currentBox != null) {
+
+                try {
+                    service.deleteBox(currentBox.getBid());
+                } catch (ServiceException e) {
+                    Main.showAlert("Error", "Problem while deleting box with id: " + currentBox.getBid(), e.getMessage(), Alert.AlertType.ERROR);
+                }
+                showAll();
+            } else {
+                Main.showAlert("Error", "No row selected.", "You must select a row in order to delete it.", Alert.AlertType.ERROR);
             }
-            showAll();
-        }
-        else {
-            Main.showAlert("Error", "No row selected.", "You must select a row in order to delete it.", Alert.AlertType.ERROR);
         }
     }
 

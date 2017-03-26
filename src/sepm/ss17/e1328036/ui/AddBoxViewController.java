@@ -14,9 +14,7 @@ import sepm.ss17.e1328036.service.Service;
 import sepm.ss17.e1328036.service.ServiceException;
 import sepm.ss17.e1328036.service.SimpleService;
 
-import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -40,14 +38,13 @@ public class AddBoxViewController implements Initializable {
 
     private final FileChooser fileChooser = new FileChooser();
 
-    private Desktop desktop = Desktop.getDesktop();
-
-    private String imagePath = "";
-
     private Service service;
+
+    private String path;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        path = null;
         service = new SimpleService();
         toggleGroup = new ToggleGroup();
         trueRadio.setToggleGroup(toggleGroup);
@@ -119,7 +116,8 @@ public class AddBoxViewController implements Initializable {
 
         if (!onError) {
             try {
-                service.addBox(new Box(0, Main.getFloat(size), Main.getInteger(sawdust), Main.getInteger(straw), hasWindow, Main.getFloat(price), imagePath, false));
+                path = path == null ? "file:src\\sepm\\ss17\\e1328036\\images\\NoBox.png" : path;
+                service.addBox(new Box(0, Main.getFloat(size), Main.getInteger(sawdust), Main.getInteger(straw), hasWindow, Main.getFloat(price), path, false));
             } catch (ServiceException e) {
                 Main.showAlert("Error", "Problem while saving the new box.", e.getMessage(), Alert.AlertType.ERROR);
             }
@@ -128,17 +126,23 @@ public class AddBoxViewController implements Initializable {
 
     @FXML
     public void onBrowseClicked() {
-        File file = fileChooser.showOpenDialog((Stage)cancelButton.getScene().getWindow());
-        if (file != null) {
-            imagePath = file.getAbsolutePath();
-        }
-    }
 
-    private void openFile(File file) {
-        try {
-            desktop.open(file);
-        } catch (IOException ex) {
-            Main.showAlert("Error", "Problem occurred while opening the file.", "Please try again.", Alert.AlertType.ERROR);
+        Stage stage = new Stage();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File("."));
+        fileChooser.setTitle("Choose a photo:");
+
+        FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+        FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
+
+        fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
+
+        File file = fileChooser.showOpenDialog(stage);
+        if(file != null) {
+            String filePath = file.getAbsolutePath();
+            String folderPath = new File(".").getAbsolutePath();
+            path = filePath.substring(folderPath.length() - 1);
+            path = "file:" + path;
         }
     }
 

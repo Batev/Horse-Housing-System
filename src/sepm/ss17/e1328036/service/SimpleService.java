@@ -7,7 +7,10 @@ import sepm.ss17.e1328036.dao.ReservationDAO;
 import sepm.ss17.e1328036.dao.impl.BoxDAOImpl;
 import sepm.ss17.e1328036.dao.impl.ReservationDAOImpl;
 import sepm.ss17.e1328036.dto.Box;
+import sepm.ss17.e1328036.dto.Invoice;
+import sepm.ss17.e1328036.dto.Reservation;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -120,6 +123,92 @@ public class SimpleService implements Service {
 
         try {
             boxDAO.save(box);
+        } catch (DAOException e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Reservation> getAllReservations() throws ServiceException {
+        try {
+            return reservationDAO.getAll();
+        } catch (DAOException e) {
+            throw new ServiceException("Problem while listing all reservations.");
+        }
+    }
+
+    @Override
+    public List<Reservation> getReservationsById(int rid) throws ServiceException {
+
+        if (rid < 0) {
+            throw new ServiceException("Reservation id must be a positive number.");
+        }
+        try {
+            return reservationDAO.getById(rid);
+        } catch (DAOException e) {
+            throw new ServiceException("Problem while listing reservations by id.");
+        }
+    }
+
+    @Override
+    public List<Reservation> getReservationsByDate(Date from, Date to) throws ServiceException {
+        if (from.after(to)) {
+            throw new ServiceException("Date from must be earlier than Date to.");
+        }
+        try {
+            return reservationDAO.getByDate(from, to);
+        } catch (DAOException e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    @Override
+    public int getNextId() throws ServiceException {
+        try {
+            return reservationDAO.getNextId();
+        } catch (DAOException e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void deleteReservation(Invoice reservation) throws ServiceException {
+        if(reservation == null) {
+            throw new ServiceException("Reservation must not be null.");
+        }
+
+        try {
+            reservationDAO.delete(reservation);
+        } catch (DAOException e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void updateReservationEndDate(int bid, Date dateFrom, Date dateTo, Date newEndDate) throws ServiceException {
+        if (bid < 0) {
+            throw new ServiceException("Box ID must be a positive number.");
+        }
+        else if (dateFrom.after(dateTo)) {
+            throw new ServiceException("Date to must be greater than Date from.");
+        }
+        else if (dateFrom.after(newEndDate)) {
+            throw new ServiceException("The new Date must be greater than the Date from.");
+        }
+        else if (dateTo.before(newEndDate)) {
+            throw new ServiceException("Cannot change the Date to of an inactive reservation.");
+        }
+
+        reservationDAO.updateEndDate(bid, dateFrom, dateTo, newEndDate);
+    }
+
+    @Override
+    public void addReservation(Reservation reservation) throws ServiceException {
+        if (reservation == null) {
+            throw new ServiceException("Reservation must not be null.");
+        }
+        try {
+            reservationDAO.create(reservation);
         } catch (DAOException e) {
             throw new ServiceException(e.getMessage());
         }

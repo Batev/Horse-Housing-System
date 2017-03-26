@@ -12,7 +12,6 @@ import sepm.ss17.e1328036.service.ServiceException;
 import sepm.ss17.e1328036.service.SimpleService;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 

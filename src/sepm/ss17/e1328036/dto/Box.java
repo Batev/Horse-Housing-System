@@ -92,6 +92,7 @@ public class Box {
         return image;
     }
 
+    /**
     public void setImage(String image) {
         this.image = image;
     }
@@ -108,11 +109,7 @@ public class Box {
         picture.setVisible(true);
 
         return picture;
-    }
-
-    public void setPicture(ImageView picture) {
-        this.picture = picture;
-    }
+    } */
 
     @Override
     public String toString() {
