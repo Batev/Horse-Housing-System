@@ -1,7 +1,10 @@
 package sepm.ss17.e1328036.dao.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sepm.ss17.e1328036.dao.BoxDAO;
 import sepm.ss17.e1328036.dao.DAOException;
+import sepm.ss17.e1328036.dao.test.BoxDAOImplTest;
 import sepm.ss17.e1328036.domain.Box;
 import sepm.ss17.e1328036.util.DatabaseUtil;
 
@@ -25,8 +28,12 @@ public class BoxDAOImpl implements BoxDAO{
     private final String selectBySizeStatement = "SELECT * FROM Boxes b WHERE b.size BETWEEN ? AND ?";
     private final String selectByIdStatement = "SELECT * FROM Boxes b WHERE b.bid = ?";
 
+    private static final Logger logger = LoggerFactory.getLogger(BoxDAOImplTest.class);
+
     @Override
     public void save(Box box) throws DAOException {
+
+        logger.info("Saving new box in the database:" + box);
         try {
             PreparedStatement preparedStatement = DatabaseUtil.getConnection().prepareStatement(saveStatement);
 
@@ -41,12 +48,14 @@ public class BoxDAOImpl implements BoxDAO{
             preparedStatement.close();
 
         } catch (SQLException e) {
+            logger.error("Save: " + e);
             throw new DAOException(e.getMessage());
         }
     }
 
     @Override
     public void delete(int bid) throws DAOException {
+        logger.info("Deleting box from the database:" + bid);
         PreparedStatement preparedStatement = null;
 
         try {
@@ -57,17 +66,19 @@ public class BoxDAOImpl implements BoxDAO{
             preparedStatement.close();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DAOException();
         }
     }
 
     @Override
     public void updatePrice(int bid, float newPrice) throws DAOException {
+        logger.info("Updating box price: " + bid);
         update(false, bid, newPrice);
     }
 
     @Override
     public void updateSize(int bid, float newSize) throws DAOException {
+        logger.info("Updating box size: " + bid);
         update(true, bid, newSize);
     }
 
@@ -88,6 +99,7 @@ public class BoxDAOImpl implements BoxDAO{
             }
         }
         else {
+
             throw new DAOException("The box that you are trying to update is currently reserved and cannot be updated.");
         }
     }
@@ -114,7 +126,7 @@ public class BoxDAOImpl implements BoxDAO{
 
     @Override
     public List<Box> getAllWithDeleted() throws DAOException {
-
+        logger.info("Getting all boxes + deleted.");
         List<Box> boxList = new LinkedList<>();
         PreparedStatement preparedStatement = null;
         try {
@@ -135,6 +147,7 @@ public class BoxDAOImpl implements BoxDAO{
     }
 
     private List<Box> get(boolean isFiltered, float from, float to, boolean isSize, boolean isId) throws DAOException {
+        logger.info("Getting boxes either filtered or not.");
         List<Box> boxList = new LinkedList<>();
 
         try {

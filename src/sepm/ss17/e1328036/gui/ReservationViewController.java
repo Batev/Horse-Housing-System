@@ -162,9 +162,9 @@ public class ReservationViewController implements Initializable {
                 Main.showAlert("Error", "Problem while updating the end date.", e.getMessage(), Alert.AlertType.ERROR);
                 return;
             }
+            showAll();
             generateInvoice(reservationTable.getSelectionModel().getSelectedItems());
         }
-        showAll();
     }
 
     private void generateInvoice(ObservableList<Invoice> selectedItems) {
