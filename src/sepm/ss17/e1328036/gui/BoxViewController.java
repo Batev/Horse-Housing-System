@@ -26,7 +26,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
- * Created by evgen on 23.03.2017.
+ * @author Evgeni Batev
+ * Controller for the box tab interface.
  */
 public class BoxViewController implements Initializable {
 

@@ -18,7 +18,8 @@ import java.util.List;
 
 
 /**
- * Created by evgen on 19.03.2017.
+ * @author Evgeni Batev
+ * The implementation of the reservation DAO.
  */
 public class ReservationDAOImpl implements ReservationDAO {
 

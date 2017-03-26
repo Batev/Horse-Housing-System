@@ -1,7 +1,8 @@
 package sepm.ss17.e1328036.dao;
 
 /**
- * Created by evgen on 23.03.2017.
+ * @author Evgeni Batev
+ * Exception thrown in the DAOs.
  */
 public class DAOException extends Exception {
 

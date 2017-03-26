@@ -13,7 +13,8 @@ import java.sql.Date;
 import java.util.List;
 
 /**
- * Created by evgen on 23.03.2017.
+ * @author Evgeni Batev
+ * Class for implementing the service interface.
  */
 public class SimpleService implements Service {
 

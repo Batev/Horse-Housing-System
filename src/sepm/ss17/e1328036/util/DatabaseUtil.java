@@ -9,7 +9,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Created by evgen on 18.03.2017.
+ * @author Evgeni Batev
+ * Class for initializing the database connection.
  */
 public class DatabaseUtil {
 

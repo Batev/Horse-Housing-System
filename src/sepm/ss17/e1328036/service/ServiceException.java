@@ -1,7 +1,8 @@
 package sepm.ss17.e1328036.service;
 
 /**
- * Created by evgen on 25.03.2017.
+ * @author Evgeni Batev
+ * Exception thrown by the service.
  */
 public class ServiceException extends Exception {
 

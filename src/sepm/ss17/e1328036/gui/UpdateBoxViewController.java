@@ -14,9 +14,9 @@ import sepm.ss17.e1328036.service.SimpleService;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
 /**
- * Created by evgen on 25.03.2017.
+ * @author Evgeni Batev
+ * Controller for the box update interface.
  */
 public class UpdateBoxViewController implements Initializable {
 

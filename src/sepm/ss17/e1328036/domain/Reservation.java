@@ -3,7 +3,8 @@ package sepm.ss17.e1328036.domain;
 import java.util.List;
 
 /**
- * Created by evgen on 18.03.2017.
+ * @author Evgeni Batev
+ * Entity class for the reservations.
  */
 public class Reservation {
     private int rid;

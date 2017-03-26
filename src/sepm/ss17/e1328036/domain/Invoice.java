@@ -3,7 +3,8 @@ package sepm.ss17.e1328036.domain;
 import java.sql.Date;
 
 /**
- * Created by evgen on 20.03.2017.
+ * @author Evgeni Batev
+ * Entity class for the invoices.
  */
 public class Invoice {
 

@@ -3,7 +3,8 @@ package sepm.ss17.e1328036.domain;
 import javafx.scene.image.ImageView;
 
 /**
- * Created by evgen on 18.03.2017.
+ * @author Evgeni Batev
+ * Entity class for the boxes.
  */
 public class Box {
 

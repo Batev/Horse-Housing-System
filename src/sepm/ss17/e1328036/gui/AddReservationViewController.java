@@ -22,7 +22,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 /**
- * Created by evgen on 26.03.2017.
+ * @author Evgeni Batev
+ * Controller for the reservation add interface.
  */
 public class AddReservationViewController implements Initializable {
 

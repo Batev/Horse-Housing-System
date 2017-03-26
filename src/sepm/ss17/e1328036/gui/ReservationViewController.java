@@ -29,7 +29,8 @@ import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by evgen on 26.03.2017.
+ * @author Evgeni Batev
+ * Controller for the reservation tab interface.
  */
 public class ReservationViewController implements Initializable {
 

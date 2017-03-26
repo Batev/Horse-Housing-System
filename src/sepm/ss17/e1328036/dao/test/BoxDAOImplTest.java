@@ -5,13 +5,13 @@ import org.junit.Before;
 import org.slf4j.Logger ;
 import org.slf4j.LoggerFactory;
 
-import sepm.ss17.e1328036.dao.BoxDAO;
 import sepm.ss17.e1328036.util.DatabaseUtil;
 import java.sql.SQLException;
 
 
 /**
- * Created by evgen on 20.03.2017.
+ * @author Evgeni Batev
+ * Tests for the DAOs.
  */
 public class BoxDAOImplTest extends AbstractBoxDAOTest {
 

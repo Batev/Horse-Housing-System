@@ -13,6 +13,10 @@ import java.sql.Date;
 import java.util.Calendar;
 import java.util.Optional;
 
+/**
+ * @author Evgeni Batev
+ * The run of the application.
+ */
 public class Main extends Application {
 
     @Override

@@ -19,7 +19,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by evgen on 26.03.2017.
+ * @author Evgeni Batev
+ * Controller for the box add interface.
  */
 public class AddBoxViewController implements Initializable {
 

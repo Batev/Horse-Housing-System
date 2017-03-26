@@ -6,13 +6,14 @@ import sepm.ss17.e1328036.dao.BoxDAO;
 import sepm.ss17.e1328036.dao.DAOException;
 
 /**
- * Created by evgen on 20.03.2017.
+ * @author Evgeni Batev
+ * Tests for the DAOs.
  */
 public abstract class AbstractBoxDAOTest {
 
     protected BoxDAO boxDAO;
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = DAOException.class)
     public void saveNullThrowsException() throws DAOException {
         boxDAO.save(null);
     }

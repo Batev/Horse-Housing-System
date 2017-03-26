@@ -15,8 +15,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by evgen on 18.03.2017.
-*/
+ * @author Evgeni Batev
+ * The implementation of the box DAO.
+ */
 public class BoxDAOImpl implements BoxDAO{
 
     private final String saveStatement = "INSERT INTO Boxes (bid, size, sawdust_amount, straw_amaount, has_window, price, image, is_deleted) VALUES (DEFAULT,?,?,?,?,?,?,DEFAULT)";
