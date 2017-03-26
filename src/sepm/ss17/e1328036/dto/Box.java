@@ -1,5 +1,11 @@
 package sepm.ss17.e1328036.dto;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+import java.io.File;
+import java.net.MalformedURLException;
+
 /**
  * Created by evgen on 18.03.2017.
  */
@@ -13,6 +19,7 @@ public class Box {
     private float price;
     private boolean isDeleted;
     private String image;
+    private ImageView picture;
 
     public Box(int bid, float size, int sawdust, int straw, boolean hasWindow, float price, String image, boolean isDeleted) {
         this.bid = bid;
@@ -57,11 +64,11 @@ public class Box {
         this.straw = straw;
     }
 
-    public boolean hasWindow() {
+    public boolean getHasWindow() {
         return hasWindow;
     }
 
-    public void setWindow(boolean hasWindow) {
+    public void setHasWindow(boolean hasWindow) {
         this.hasWindow = hasWindow;
     }
 
@@ -87,6 +94,24 @@ public class Box {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public ImageView getPicture() {
+        File file = new File(getImage());
+        Image value = null;
+        try {
+            value = new Image(file.toURI().toURL().toExternalForm());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        picture.setImage(value);
+        picture.setVisible(true);
+
+        return picture;
+    }
+
+    public void setPicture(ImageView picture) {
+        this.picture = picture;
     }
 
     @Override

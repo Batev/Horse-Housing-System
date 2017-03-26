@@ -28,7 +28,6 @@ public class ReservationDAOImpl implements ReservationDAO {
     private final String getReservationIdStatement = "SELECT TOP 1 rid FROM Reservations r ORDER BY r.rid DESC";
     private final String saveStatement = "INSERT INTO BoxReservations (brid, bid, rid, client_name, horse_name, date_from, date_to) VALUES (DEFAULT, ?, ?, ?, ?, ?, ?)";
     private final String deleteStatement = "UPDATE Reservations r SET r.is_deleted = TRUE WHERE r.rid = ?";
-    private final String checkAvailabilityStatement = "SELECT * FROM Reservations r WHERE r.date_to > ?";
     private final String selectAllStatement = "SELECT * FROM Reservations r JOIN Boxreservations br on br.rid = r.rid";
     private final String updateDateStatement = "UPDATE BoxReservations br SET br.date_to = ? WHERE br.bid = ? AND br.date_from = ? AND br.date_to = ?";
 
@@ -82,29 +81,40 @@ public class ReservationDAOImpl implements ReservationDAO {
     @Override
     public void delete(Reservation reservation) throws DAOException {
 
+        if (!checkActive(reservation.getRid(), false)) {
+            try {
+                PreparedStatement preparedStatement2 = DatabaseUtil.getConnection().prepareStatement(deleteStatement);
+
+                preparedStatement2.setInt(1, reservation.getRid());
+                preparedStatement2.executeUpdate();
+
+                preparedStatement2.close();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            throw new DAOException("The reservation has an active reserved box and cannot be deleted.");
+        }
+    }
+
+    static boolean checkActive(int id, boolean isBox) {
+        String statement = isBox ? "SELECT * FROM BoxReservations r WHERE r.date_to > ? AND r.bid = ?" : "SELECT * FROM BoxReservations r WHERE r.date_to > ? AND r.rid = ?";
+
         try {
-            PreparedStatement preparedStatement1 = DatabaseUtil.getConnection().prepareStatement(checkAvailabilityStatement);
+            PreparedStatement preparedStatement1 = DatabaseUtil.getConnection().prepareStatement(statement);
             preparedStatement1.setDate(1, new Date(Calendar.getInstance().getTime().getTime()));
+            preparedStatement1.setInt(2, id);
 
             ResultSet rs = preparedStatement1.executeQuery();
             if (rs.next()) {
-                throw new DAOException("There is a reservation, that is currently active.");
+                return true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        try {
-            PreparedStatement preparedStatement2 = DatabaseUtil.getConnection().prepareStatement(deleteStatement);
-
-            preparedStatement2.setInt(1, reservation.getRid());
-            preparedStatement2.executeUpdate();
-
-            preparedStatement2.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        return false;
     }
 
     @Override

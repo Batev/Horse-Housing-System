@@ -9,4 +9,10 @@ import java.util.List;
  */
 public interface Service {
 
+    List<Box> getAllBoxes() throws ServiceException;
+    List<Box> getBoxesByPrice(float priceFrom, float priceTo) throws ServiceException;
+    List<Box> getBoxesBySize(float sizeFrom, float sizeTo) throws ServiceException;
+    List<Box> getBoxesById(int bid) throws ServiceException;
+    void updateBoxSize(int bid, float newSize) throws ServiceException;
+    void updateBoxPrice(int bid, float newPrice) throws ServiceException;
 }

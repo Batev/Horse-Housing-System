@@ -12,9 +12,11 @@ import java.util.List;
 public interface BoxDAO {
 
     void save(Box box) throws DAOException;
-    Box search(int bid) throws DAOException;
     void delete(int bid) throws DAOException;
     void updatePrice(int bid, float newPrice) throws DAOException;
+    void updateSize(int bid, float newSize) throws DAOException;
     List<Box> getAll() throws DAOException;
-    List<Box> getByDate(float priceFrom, Float priceTo) throws DAOException;
+    List<Box> getByPrice(float priceFrom, float priceTo) throws DAOException;
+    List<Box> getBySize(float sizeFrom, float sizeTo) throws DAOException;
+    List<Box> getById(int bid) throws DAOException;
 }

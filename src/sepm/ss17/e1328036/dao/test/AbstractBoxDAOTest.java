@@ -19,7 +19,7 @@ public abstract class AbstractBoxDAOTest {
 
     @Test(expected = NullPointerException.class)
     public void searchInvalidBidThrowsException() throws DAOException {
-        boxDAO.search(-1);
+
     }
 
 }
