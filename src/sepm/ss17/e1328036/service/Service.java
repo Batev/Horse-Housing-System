@@ -1,8 +1,8 @@
 package sepm.ss17.e1328036.service;
 
-import sepm.ss17.e1328036.dto.Box;
-import sepm.ss17.e1328036.dto.Invoice;
-import sepm.ss17.e1328036.dto.Reservation;
+import sepm.ss17.e1328036.domain.Box;
+import sepm.ss17.e1328036.domain.Invoice;
+import sepm.ss17.e1328036.domain.Reservation;
 
 import java.sql.Date;
 import java.util.List;
@@ -13,6 +13,7 @@ import java.util.List;
 public interface Service {
 
     List<Box> getAllBoxes() throws ServiceException;
+    List<Box> getAllBoxesWithDeleted() throws ServiceException;
     List<Box> getBoxesByPrice(float priceFrom, float priceTo) throws ServiceException;
     List<Box> getBoxesBySize(float sizeFrom, float sizeTo) throws ServiceException;
     List<Box> getBoxesById(int bid) throws ServiceException;

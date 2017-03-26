@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss17.e1328036.ui.AddReservationViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss17.e1328036.gui.AddReservationViewController">
    <children>
       <ListView fx:id="boxListView" layoutX="100.0" layoutY="105.0" prefHeight="148.0" prefWidth="200.0" />
       <TextField fx:id="clientNameField" layoutX="126.0" layoutY="31.0" />

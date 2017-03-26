@@ -1,4 +1,4 @@
-package sepm.ss17.e1328036.ui;
+package sepm.ss17.e1328036.gui;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -8,9 +8,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sepm.ss17.e1328036.dto.Box;
-import sepm.ss17.e1328036.dto.Invoice;
-import sepm.ss17.e1328036.dto.Reservation;
+import sepm.ss17.e1328036.domain.Box;
+import sepm.ss17.e1328036.domain.Invoice;
+import sepm.ss17.e1328036.domain.Reservation;
 import sepm.ss17.e1328036.service.Service;
 import sepm.ss17.e1328036.service.ServiceException;
 import sepm.ss17.e1328036.service.SimpleService;

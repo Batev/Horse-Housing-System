@@ -1,4 +1,4 @@
-package sepm.ss17.e1328036.dto;
+package sepm.ss17.e1328036.domain;
 
 import java.sql.Date;
 

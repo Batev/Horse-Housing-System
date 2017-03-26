@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sepm.ss17.e1328036.dao.DAOException;
 import sepm.ss17.e1328036.dao.ReservationDAO;
-import sepm.ss17.e1328036.dto.Invoice;
-import sepm.ss17.e1328036.dto.Reservation;
+import sepm.ss17.e1328036.domain.Invoice;
+import sepm.ss17.e1328036.domain.Reservation;
 import sepm.ss17.e1328036.util.DatabaseUtil;
 
 import java.sql.Date;

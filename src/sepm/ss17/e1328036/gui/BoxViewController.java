@@ -1,4 +1,4 @@
-package sepm.ss17.e1328036.ui;
+package sepm.ss17.e1328036.gui;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -14,7 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sepm.ss17.e1328036.dto.Box;
+import sepm.ss17.e1328036.domain.Box;
 import sepm.ss17.e1328036.service.Service;
 import sepm.ss17.e1328036.service.ServiceException;
 import sepm.ss17.e1328036.service.SimpleService;

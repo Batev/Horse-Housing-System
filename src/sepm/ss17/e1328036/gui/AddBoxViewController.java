@@ -1,4 +1,4 @@
-package sepm.ss17.e1328036.ui;
+package sepm.ss17.e1328036.gui;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import sepm.ss17.e1328036.dto.Box;
+import sepm.ss17.e1328036.domain.Box;
 import sepm.ss17.e1328036.service.Service;
 import sepm.ss17.e1328036.service.ServiceException;
 import sepm.ss17.e1328036.service.SimpleService;

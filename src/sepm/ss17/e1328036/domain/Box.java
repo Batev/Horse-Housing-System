@@ -1,10 +1,6 @@
-package sepm.ss17.e1328036.dto;
+package sepm.ss17.e1328036.domain;
 
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
-import java.io.File;
-import java.net.MalformedURLException;
 
 /**
  * Created by evgen on 18.03.2017.

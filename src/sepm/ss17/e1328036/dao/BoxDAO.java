@@ -1,9 +1,7 @@
 package sepm.ss17.e1328036.dao;
 
-import sepm.ss17.e1328036.dto.Box;
+import sepm.ss17.e1328036.domain.Box;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -16,6 +14,7 @@ public interface BoxDAO {
     void updatePrice(int bid, float newPrice) throws DAOException;
     void updateSize(int bid, float newSize) throws DAOException;
     List<Box> getAll() throws DAOException;
+    List<Box> getAllWithDeleted() throws DAOException;
     List<Box> getByPrice(float priceFrom, float priceTo) throws DAOException;
     List<Box> getBySize(float sizeFrom, float sizeTo) throws DAOException;
     List<Box> getById(int bid) throws DAOException;

@@ -1,14 +1,13 @@
 package sepm.ss17.e1328036.service;
 
-import javafx.fxml.FXML;
 import sepm.ss17.e1328036.dao.BoxDAO;
 import sepm.ss17.e1328036.dao.DAOException;
 import sepm.ss17.e1328036.dao.ReservationDAO;
 import sepm.ss17.e1328036.dao.impl.BoxDAOImpl;
 import sepm.ss17.e1328036.dao.impl.ReservationDAOImpl;
-import sepm.ss17.e1328036.dto.Box;
-import sepm.ss17.e1328036.dto.Invoice;
-import sepm.ss17.e1328036.dto.Reservation;
+import sepm.ss17.e1328036.domain.Box;
+import sepm.ss17.e1328036.domain.Invoice;
+import sepm.ss17.e1328036.domain.Reservation;
 
 import java.sql.Date;
 import java.util.List;
@@ -30,6 +29,15 @@ public class SimpleService implements Service {
     public List<Box> getAllBoxes() throws ServiceException {
         try {
             return boxDAO.getAll();
+        } catch (DAOException e) {
+            throw new ServiceException(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Box> getAllBoxesWithDeleted() throws ServiceException {
+        try {
+            return boxDAO.getAllWithDeleted();
         } catch (DAOException e) {
             throw new ServiceException(e.getMessage());
         }
@@ -193,7 +201,7 @@ public class SimpleService implements Service {
             throw new ServiceException("Date to must be greater than Date from.");
         }
         else if (dateFrom.after(newEndDate)) {
-            throw new ServiceException("The new Date must be greater than the Date from.");
+            throw new ServiceException("The reservation has not stared yet.");
         }
         else if (dateTo.before(newEndDate)) {
             throw new ServiceException("Cannot change the Date to of an inactive reservation.");

@@ -1,4 +1,4 @@
-package sepm.ss17.e1328036.ui;
+package sepm.ss17.e1328036.gui;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -11,9 +11,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sepm.ss17.e1328036.dto.Box;
-import sepm.ss17.e1328036.dto.Invoice;
-import sepm.ss17.e1328036.dto.Reservation;
+import sepm.ss17.e1328036.domain.Box;
+import sepm.ss17.e1328036.domain.Invoice;
+import sepm.ss17.e1328036.domain.Reservation;
 import sepm.ss17.e1328036.service.Service;
 import sepm.ss17.e1328036.service.ServiceException;
 import sepm.ss17.e1328036.service.SimpleService;
@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -60,6 +59,8 @@ public class ReservationViewController implements Initializable {
     ToggleGroup toggleGroup;
 
     String currentRadioButtonValue;
+
+    private static int count = 1;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -159,35 +160,52 @@ public class ReservationViewController implements Initializable {
                 service.updateReservationEndDate(invoice.getBid(), invoice.getDateFrom(), invoice.getDateTo(), newDate);
             } catch (ServiceException e) {
                 Main.showAlert("Error", "Problem while updating the end date.", e.getMessage(), Alert.AlertType.ERROR);
+                return;
             }
+            generateInvoice(reservationTable.getSelectionModel().getSelectedItems());
         }
-
         showAll();
-
-        generateInvoice(reservationTable.getSelectionModel().getSelectedItems());
     }
 
     private void generateInvoice(ObservableList<Invoice> selectedItems) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Invoice");
+        alert.setTitle("Invoice " + count++);
         alert.setHeaderText("Information about the selected reservations: ");
         String msg = "";
+        List<Box> boxList = new LinkedList<>();
+        float priceAll = 0f;
+
+        try {
+            boxList = service.getAllBoxesWithDeleted();
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
 
         for (Invoice invoice:
              selectedItems) {
+            float price = 0f;
+            for (Box box:
+                 boxList) {
+                if (box.getBid() == invoice.getBid()) {
+                    price = box.getPrice();
+                }
+            }
+
             long days = getDifferenceDays(invoice.getDateFrom(), invoice.getDateTo());
-            msg += "Box with ID: " + invoice.getBid() + " was reserved by " + invoice.getClientName() + " for the horse" + invoice.getHorseName() + " for " + days + " days.\n";
-            msg += "Total cost: " + days;
+            msg += "Box with ID: " + invoice.getBid() + " was reserved by " + invoice.getClientName() + " for the horse " + invoice.getHorseName() + " for " + days + " days.\n";
+            msg += "Total cost: " + days*price + "€.\n\n";
+            priceAll += days*price;
         }
 
-        alert.setContentText(msg);
+        msg += "Total cost for all reservations: " + priceAll;
 
+        alert.setContentText(msg);
         alert.showAndWait();
     }
 
     @FXML
     public void onInvoiceClicked() {
-
+        generateInvoice(reservationTable.getSelectionModel().getSelectedItems());
     }
 
     private long getDifferenceDays(Date d1, Date d2) {

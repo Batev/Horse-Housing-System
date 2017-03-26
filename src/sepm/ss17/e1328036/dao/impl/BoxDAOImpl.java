@@ -2,18 +2,12 @@ package sepm.ss17.e1328036.dao.impl;
 
 import sepm.ss17.e1328036.dao.BoxDAO;
 import sepm.ss17.e1328036.dao.DAOException;
-import sepm.ss17.e1328036.dao.ReservationDAO;
-import sepm.ss17.e1328036.dto.Box;
-import sepm.ss17.e1328036.dto.Reservation;
+import sepm.ss17.e1328036.domain.Box;
 import sepm.ss17.e1328036.util.DatabaseUtil;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -116,6 +110,28 @@ public class BoxDAOImpl implements BoxDAO{
     @Override
     public List<Box> getByPrice(float priceFrom, float priceTo) throws DAOException {
         return get(true, priceFrom, priceTo, false, false);
+    }
+
+    @Override
+    public List<Box> getAllWithDeleted() throws DAOException {
+
+        List<Box> boxList = new LinkedList<>();
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = DatabaseUtil.getConnection().prepareStatement(selectAllStatement);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                boxList.add(new Box(resultSet.getInt(1), resultSet.getFloat(2), resultSet.getInt(3), resultSet.getInt(4), resultSet.getBoolean(5), resultSet.getFloat(6), resultSet.getString(7), resultSet.getBoolean(8)));
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            throw new DAOException("");
+        }
+        return boxList;
     }
 
     private List<Box> get(boolean isFiltered, float from, float to, boolean isSize, boolean isId) throws DAOException {

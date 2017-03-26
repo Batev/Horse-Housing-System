@@ -1,7 +1,7 @@
 package sepm.ss17.e1328036.dao;
 
-import sepm.ss17.e1328036.dto.Invoice;
-import sepm.ss17.e1328036.dto.Reservation;
+import sepm.ss17.e1328036.domain.Invoice;
+import sepm.ss17.e1328036.domain.Reservation;
 
 import java.sql.Date;
 import java.util.List;

@@ -1,10 +1,9 @@
-package sepm.ss17.e1328036.ui;
+package sepm.ss17.e1328036.gui;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import sepm.ss17.e1328036.service.ServiceException;
 
 import java.net.URL;
 import java.sql.Date;
