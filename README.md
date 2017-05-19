@@ -1,6 +1,6 @@
 ## Horse-Housing-System (Wendy's Guesthouse)
 
-###Program for renting horse houses
+**Program for renting horse houses.**
 
 The program has a [Three-tier architecture](https://en.wikipedia.org/wiki/Multitier_architecture) consisting of a:
 * Persistence Layer: Uses H2 database. The communication between the program and the database happens with prepared statements.
