@@ -3,9 +3,9 @@
 **Program for renting horse houses.**
 
 The program has a [Three-tier architecture](https://en.wikipedia.org/wiki/Multitier_architecture) consisting of a:
-* Persistence Layer: Uses H2 database. The communication between the program and the database happens with prepared statements.
+* Persistence Layer: Uses [H2 database](http://www.h2database.com/html/main.html). The communication between the program and the database happens with prepared statements.
 * Service Layer: Varifies data input and makes complicated computations.
-* Presentation Layer: Uses JavaFX. Simple interface for the users.
+* Presentation Layer: Uses [JavaFX](https://docs.oracle.com/javase/8/javase-clienttechnologies.htm). Simple interface for the users.
 
 _A simple sql create script could be found [here](https://github.com/Batev/Horse-Housing-System/blob/master/src/sepm/ss17/e1328036/util/Create.sql) for creating and filling the database._
 
